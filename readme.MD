@@ -31,10 +31,23 @@ Copia `/refine-review` y `/refine-resolve` a `~/.claude/skills/` (van dentro del
 
 ## Uso
 
-- Pasa el ratón por el margen izquierdo de cualquier línea → aparece un **`+`** → clic, escribe y envía.
-- **Responder**, **Resolver / Reabrir**, **Editar / Borrar**: botones en el hilo.
-- `/refine-review` — Claude revisa el diff actual y deja hilos que verás inline.
-- `/refine-resolve` — Claude lee tus comentarios abiertos, aplica los cambios y responde. Nunca resuelve: el ✓ lo das tú.
+### 1. Deja un comentario
+
+Pasa el ratón por el margen izquierdo de cualquier línea → aparece un **`+`** → clic, escribe y envía.
+
+![Paso 1 — el hilo en el panel Comments (1), la línea comentada (2), el comentario (3) y /refine-resolve listo en Claude Code (4)](docs/step-1-comment.png)
+
+### 2. Claude lo aplica
+
+Lanza `/refine-resolve`: lee tus comentarios abiertos, hace los cambios y responde en cada hilo. Nunca resuelve — el ✓ lo das tú cuando lo has verificado.
+
+![Paso 2 — la respuesta de Claude aparece inline en el hilo (1) y el resumen en el panel de Claude Code (2)](docs/step-2-result.png)
+
+### 3. Cierras el hilo
+
+**Responder**, **Resolver / Reabrir**, **Editar / Borrar**: botones en el propio hilo.
+
+En sentido inverso, `/refine-review` hace que Claude revise el diff actual y deje él los hilos, que aparecen inline igual.
 
 Todo se guarda en `.refiner/comments.json`.
 

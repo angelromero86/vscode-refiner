@@ -7,5 +7,6 @@ tsconfig.json
 **/*.ts
 .gitignore
 .refiner/**
+docs/**
 *.vsix
 .codenotes

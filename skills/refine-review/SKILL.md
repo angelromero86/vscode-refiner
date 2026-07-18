@@ -61,6 +61,41 @@ Severity prefix in `body` (use exactly one, in brackets, at the start):
 - `[question]` — something genuinely unclear that needs author input
 - `[nit]` — minor but actionable
 
+## Formatting the `body`
+
+The extension renders `body` as **Markdown**. Write it as well-formatted prose, not
+as a wall of text — the human reads these in a narrow bubble beside their code.
+
+**`body` is a JSON string, so line breaks are `\n`.** A blank line between paragraphs
+is `\n\n`. Getting this wrong is the most common mistake: it collapses your whole
+comment into one run-on paragraph.
+
+Use, where they genuinely help:
+
+- **Paragraph breaks** (`\n\n`) — one idea per paragraph. Always break between the
+  problem and the fix.
+- **`` `code` ``** — every identifier, file path, flag, type, and literal value.
+  Write `` `userId` `` and `` `null` ``, never bare userId or null.
+- **Fenced code blocks** — for a suggested replacement or a snippet that's clearer
+  shown than described. Tag the language: ` ```ts `. Keep them short; a few lines,
+  not the whole function.
+- **Bullet lists** — when a finding has several independent parts, or you're listing
+  affected call sites.
+- **Blockquotes** (`> `) — when quoting a CLAUDE.md rule or existing code you're
+  citing as the contract being violated.
+- **Bold** — sparingly, for the one phrase that matters most.
+
+A well-formatted finding:
+
+```json
+{
+  "body": "[must-fix] `parseConfig` returns `undefined` when the file is empty, but every caller assumes an object.\n\nThe early return on line 34 skips the default merge:\n\n```ts\nif (!raw) return;  // callers then read `.port` off undefined\n```\n\nReturning `DEFAULT_CONFIG` here keeps the contract the three call sites in `server.ts` rely on."
+}
+```
+
+Don't over-format: a one-line `[nit]` needs no headings, no bullets, no code block.
+Match the structure to the size of the finding.
+
 ## Prerequisites
 
 1. Confirm you're inside a git repo: `git rev-parse --show-toplevel`. If it fails,
