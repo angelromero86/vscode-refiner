@@ -1,0 +1,173 @@
+{
+  "name": "refiner",
+  "displayName": "Refiner",
+  "description": "Inline comment threads (annotations) that Claude Code can read and reply to.",
+  "version": "0.0.1",
+  "publisher": "refiner-dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angel/refiner.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Refiner",
+      "properties": {
+        "refiner.authorName": {
+          "type": "string",
+          "default": "",
+          "description": "Name used as the author of comments you create. Defaults to your OS username."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "refiner.createThread",
+        "title": "Add Comment",
+        "enablement": "!commentIsEmpty"
+      },
+      {
+        "command": "refiner.replyThread",
+        "title": "Reply",
+        "enablement": "!commentIsEmpty"
+      },
+      {
+        "command": "refiner.resolveThread",
+        "title": "Resolve",
+        "icon": "$(check)"
+      },
+      {
+        "command": "refiner.reopenThread",
+        "title": "Reopen",
+        "icon": "$(comment-unresolved)"
+      },
+      {
+        "command": "refiner.deleteThread",
+        "title": "Delete Thread",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "refiner.editComment",
+        "title": "Edit",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "refiner.deleteComment",
+        "title": "Delete",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "refiner.saveComment",
+        "title": "Save",
+        "enablement": "!commentIsEmpty"
+      },
+      {
+        "command": "refiner.cancelEdit",
+        "title": "Cancel"
+      },
+      {
+        "command": "refiner.refresh",
+        "title": "Reload Comments",
+        "category": "Refiner"
+      },
+      {
+        "command": "refiner.reanchor",
+        "title": "Re-anchor Comments to Current Code",
+        "category": "Refiner"
+      },
+      {
+        "command": "refiner.installSkills",
+        "title": "Install Claude Code Skills",
+        "category": "Refiner"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        { "command": "refiner.createThread", "when": "false" },
+        { "command": "refiner.replyThread", "when": "false" },
+        { "command": "refiner.resolveThread", "when": "false" },
+        { "command": "refiner.reopenThread", "when": "false" },
+        { "command": "refiner.deleteThread", "when": "false" },
+        { "command": "refiner.editComment", "when": "false" },
+        { "command": "refiner.deleteComment", "when": "false" },
+        { "command": "refiner.saveComment", "when": "false" },
+        { "command": "refiner.cancelEdit", "when": "false" }
+      ],
+      "comments/commentThread/context": [
+        {
+          "command": "refiner.createThread",
+          "group": "inline",
+          "when": "commentController == refiner.commentController && commentThreadIsEmpty"
+        },
+        {
+          "command": "refiner.replyThread",
+          "group": "inline",
+          "when": "commentController == refiner.commentController && !commentThreadIsEmpty"
+        }
+      ],
+      "comments/commentThread/title": [
+        {
+          "command": "refiner.resolveThread",
+          "group": "navigation",
+          "when": "commentController == refiner.commentController && commentThread == open"
+        },
+        {
+          "command": "refiner.reopenThread",
+          "group": "navigation",
+          "when": "commentController == refiner.commentController && commentThread == resolved"
+        },
+        {
+          "command": "refiner.deleteThread",
+          "group": "navigation",
+          "when": "commentController == refiner.commentController"
+        }
+      ],
+      "comments/comment/title": [
+        {
+          "command": "refiner.editComment",
+          "group": "group@1",
+          "when": "commentController == refiner.commentController && comment == user"
+        },
+        {
+          "command": "refiner.deleteComment",
+          "group": "group@2",
+          "when": "commentController == refiner.commentController && comment == user"
+        }
+      ],
+      "comments/comment/context": [
+        {
+          "command": "refiner.cancelEdit",
+          "group": "inline@1",
+          "when": "commentController == refiner.commentController"
+        },
+        {
+          "command": "refiner.saveComment",
+          "group": "inline@2",
+          "when": "commentController == refiner.commentController"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.4.0"
+  }
+}

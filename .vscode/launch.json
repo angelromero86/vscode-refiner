@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Normal dev loop: opens this repo as the test workspace, with your other
+      // extensions (including Claude Code) available.
+      "name": "Run Refiner Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "${workspaceFolder}",
+        "--extensionDevelopmentPath=${workspaceFolder}"
+      ],
+      "outFiles": ["${workspaceFolder}/out/**/*.js"],
+      "preLaunchTask": "npm: watch"
+    },
+    {
+      // Debugging-only: --disable-extensions turns off EVERY other extension,
+      // including Claude Code. Use this to read a clean Debug Console, not to
+      // test the Claude Code loop.
+      "name": "Run Refiner (isolated — no Claude Code)",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "${workspaceFolder}",
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--disable-extensions"
+      ],
+      "outFiles": ["${workspaceFolder}/out/**/*.js"],
+      "preLaunchTask": "npm: watch"
+    }
+  ]
+}

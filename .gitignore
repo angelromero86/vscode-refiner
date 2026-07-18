@@ -1,0 +1,6 @@
+node_modules/
+out/
+*.vsix
+
+# Created by the CodeNotes extension, not part of this project.
+.codenotes
