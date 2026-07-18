@@ -51,6 +51,37 @@ En sentido inverso, `/refine-review` hace que Claude revise el diff actual y dej
 
 Todo se guarda en `.refiner/comments.json`.
 
+## Ignorar `.refiner/` en todos tus repos
+
+Los comentarios son tuyos, no del proyecto: no tienen por qué acabar en el repo de nadie. En vez de tocar el `.gitignore` de cada uno, ignóralo una sola vez para todo tu ordenador con el **gitignore global**.
+
+Git ya lee `~/.config/git/ignore` por defecto (desde la 2.32), así que basta con añadir la línea:
+
+```sh
+mkdir -p ~/.config/git
+echo '**/.refiner/' >> ~/.config/git/ignore
+```
+
+Compruébalo desde cualquier repo con comentarios:
+
+```sh
+git check-ignore -v .refiner/comments.json
+# ~/.config/git/ignore:1:**/.refiner/    .refiner/comments.json
+```
+
+Si no imprime nada, no se está aplicando. Mira si tienes un `core.excludesFile` apuntando a otro sitio y añade la línea allí:
+
+```sh
+git config --global core.excludesFile     # vacío = se usa ~/.config/git/ignore
+```
+
+Dos avisos:
+
+- El gitignore global **solo afecta a tu máquina**. Tus compañeros no lo heredan — si en tu equipo nadie quiere versionar los comentarios, que cada uno haga lo mismo, o añadid `.refiner/` al `.gitignore` del repo.
+- Git no ignora lo que ya está trackeado. Si algún `.refiner/comments.json` ya está commiteado, sácalo primero con `git rm --cached -r .refiner/`.
+
+> Si prefieres lo contrario — compartir los comentarios con tu equipo — no ignores nada y commitea `.refiner/comments.json` como un archivo más. El formato es JSON estable y legible en un diff.
+
 ## Desarrollo
 
 ```sh
