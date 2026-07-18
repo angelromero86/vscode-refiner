@@ -114,6 +114,20 @@ rm ~/.claude/skills/refine-review ~/.claude/skills/refine-resolve
 
 - `refiner.authorName` — nombre con el que se firman tus comentarios (por defecto, tu usuario del sistema).
 
+### Quitar el scrollbar de los comentarios largos
+
+VSCode limita cada cuerpo de comentario a `20em` de alto (unas 20 líneas): lo que sobra queda dentro de una barra de scroll vertical en la propia burbuja. Con Refiner te lo encuentras más que de costumbre, porque las skills piden cuerpos bien formateados: párrafos separados, bloques de código, listas. Ese formato pasa de 20em enseguida.
+
+El tope se desactiva con un setting de **VSCode**, no de Refiner (fíjate en que no lleva el prefijo `refiner.`). En tus settings de usuario o los del workspace:
+
+```json
+{
+  "comments.maxHeight": false
+}
+```
+
+Es un booleano, por defecto `true`, disponible desde VSCode 1.78 (abril de 2023).
+
 ## Contrato de `.refiner/comments.json`
 
 Para que Claude Code participe:
